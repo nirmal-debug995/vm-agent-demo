@@ -2,11 +2,11 @@ trigger:
 - main
 
 pool:
-  name: Default   # Uses VM self-hosted agent
+  name: Default   # Must match your agent pool name
 
 steps:
 
-- script: echo "Running on Azure VM Self-Hosted Agent"
+- script: echo "Pipeline started on VM Self-Hosted Agent"
   displayName: "Start Message"
 
 - script: node -v
@@ -16,5 +16,17 @@ steps:
   displayName: "Install Dependencies"
 
 - script: |
-    echo "Build successful on VM agent"
-  displayName: "Build Step"
+    echo "Stopping old app if running..."
+    pkill node || true
+  displayName: "Stop Previous App"
+
+- script: |
+    echo "Starting Node App..."
+    nohup node app.js > app.log 2>&1 &
+  displayName: "Run Node App in Background"
+
+- script: |
+    echo "App started. Logs:"
+    sleep 3
+    cat app.log
+  displayName: "Show App Logs"

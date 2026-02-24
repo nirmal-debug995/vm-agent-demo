@@ -1,11 +1,14 @@
-const express = require('express');
-const app = express();
-const port = 5000;
+const http = require('http');
 
-app.get('/', (req, res) => {
-  res.send('Hello from Azure VM Self-Hosted Agent!');
+const hostname = '0.0.0.0';
+const port = 4000;
+
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Hello from Azure VM Self Hosted Agent!\n');
 });
 
-app.listen(port, () => {
-  console.log(`App running on port ${port}`);
+server.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
 });
