@@ -1,0 +1,20 @@
+trigger:
+- main
+
+pool:
+  name: Default   # Uses VM self-hosted agent
+
+steps:
+
+- script: echo "Running on Azure VM Self-Hosted Agent"
+  displayName: "Start Message"
+
+- script: node -v
+  displayName: "Check Node Version"
+
+- script: npm install
+  displayName: "Install Dependencies"
+
+- script: |
+    echo "Build successful on VM agent"
+  displayName: "Build Step"
